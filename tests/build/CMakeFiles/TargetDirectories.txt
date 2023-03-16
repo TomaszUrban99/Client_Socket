@@ -1,0 +1,12 @@
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/CMakeFiles/rebuild_cache.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/CMakeFiles/edit_cache.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/CMakeFiles/test.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/CMakeFiles/test1.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/CMakeFiles/stos.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/CMakeFiles/socket_server.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/CMakeFiles/stos_tablica.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/inc/CMakeFiles/edit_cache.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/inc/CMakeFiles/test.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/inc/CMakeFiles/stackList.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/inc/CMakeFiles/rebuild_cache.dir
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/build/inc/CMakeFiles/stackNode.dir

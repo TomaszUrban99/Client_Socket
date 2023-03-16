@@ -1,0 +1,1 @@
+#include "stos_tablica.hh"

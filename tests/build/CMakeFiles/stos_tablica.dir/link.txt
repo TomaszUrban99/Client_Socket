@@ -1,0 +1,2 @@
+/usr/bin/ar qc libstos_tablica.a  CMakeFiles/stos_tablica.dir/src/stos_tablica.cpp.o
+/usr/bin/ranlib libstos_tablica.a

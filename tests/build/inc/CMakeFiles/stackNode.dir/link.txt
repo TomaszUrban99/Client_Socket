@@ -1,0 +1,2 @@
+/usr/bin/ar qc libstackNode.a  
+/usr/bin/ranlib libstackNode.a

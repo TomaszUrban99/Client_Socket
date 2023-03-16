@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/stos_tablica.hh
+iostream
+-
+
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/tests/test1.cpp
+iostream
+-
+fstream
+-
+string
+-
+stos_tablica.hh
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/tests/stos_tablica.hh
+

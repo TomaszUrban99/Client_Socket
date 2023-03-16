@@ -1,0 +1,2 @@
+/usr/bin/ar qc libstackList.a  
+/usr/bin/ranlib libstackList.a

@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/socketConnection.hh
+netinet/in.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+sys/socket.h
+-
+unistd.h
+-
+iostream
+-
+
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/src/socketConnection.cpp
+socketConnection.hh
+/home/tomasz/Documents/Studia/PAMSI/Projekt1/Stos/src/socketConnection.hh
+
