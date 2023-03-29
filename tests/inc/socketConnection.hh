@@ -3,7 +3,7 @@
 
 /* Libraries for socket operation */
 
-#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,9 +16,8 @@ constexpr int PORTNUMBER = 8080;
 constexpr int ALLOWED_REPETITIONS = 10;
 
 constexpr int SOCKET_CREATION_FAILED = 1;
-constexpr int BIND_FAILED = 2;
-constexpr int LISTEN_FAILED = 3;
-constexpr int ACCEPT_FAILED = 4;
+constexpr int INVALID_ADDRESS = 2;
+constexpr int CONNECTION_FAILED = 3;
 
 /*!
     Class socketConnection- representing the idea of connection
@@ -31,47 +30,32 @@ constexpr int ACCEPT_FAILED = 4;
         the connection would be established
         ->int address_len- size of address attribute
 */
-class socketConnection
+class socketConnection_client
 {
     struct sockaddr_in address;
     int socket_descriptor;
     int address_len;
 
 public:
-    /*!
-        socketConnection &fill_socket_connection()- method
-        which makes server listening on the given port
-
-        Function:
-            1. create socket on which server will be listening to,
-            socket descriptor returned by the function socket would
-            be stored on the field socket_descriptor
-            2. bind the port number and socket
-            3. listen for incoming messagess
-
-        Return:
-        \retval socketConnection&- reference to the object of class
-        socket connection
-    */
-    socketConnection &fill_socket_connection();
-
     /*
-        int create_socket()- function, which accepts connection
-        request sent on given port number
+
     */
-    int create_socket();
+    socketConnection_client &clientConnect(char ip_Adress[]);
 
     /*
         int server_read()- function for reading incoming
         messages
     */
-    int server_read(char server_buffer[]);
+    int client_read();
 
+    int client_read(char server_buffer[], int size);
+
+    int client_send(int number_to_send);
     /*
         int server_send()- function for sending messages
         to the connected clients
     */
-    int server_send(char *character_to_send[]);
+    int client_send(char character_to_send[]);
 };
 
 #endif

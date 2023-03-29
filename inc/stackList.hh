@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <iostream>
+#include <fstream>
 #include "stackNode.hh"
 
 template <class T>
@@ -29,14 +30,11 @@ public:
     /* ACCESS TO ATTRIBUTES */
     T &top();
     std::shared_ptr<stackNode<T>> getHead();
-    T top() const
-    {
-        return _head->getElement();
-    }
+    T top() const { return _head->getElement(); }
 
     /* TOOLS FOR THE STACK */
-    void
-    push(T newElem);
+    void push(T newElem);
+    void push(T newElem, int newElemNumber);
     T pop();
 };
 
@@ -81,6 +79,43 @@ void stackList<T>::push(T newElem)
 }
 
 template <typename T>
+void stackList<T>::push(T newElem, int newNodeNumber) // 1 + 2
+{
+    std::shared_ptr<stackNode<T>> newNodePtr(new stackNode<T>(newElem, newNodeNumber)); // 5
+    std::shared_ptr<stackNode<T>> tmpNode = _head; // 3
+
+    if (tmpNode == NULL) // 3
+    {
+        _head = newNodePtr;
+        newNodePtr->setNext(NULL); 
+        _tail = newNodePtr;
+    }
+    else
+    {
+        while (tmpNode->getNext() != NULL && tmpNode->getNext()->getNodeNumber() < newNodeNumber) // 7 * (1 + 2 + 3 + 4 + ... (n-1)) = 
+        { // 7 * n*(1 + n-1)/2 = n^2 * 7/2
+            tmpNode = tmpNode->getNext();
+        }
+
+        if (tmpNode == _head && tmpNode->getNodeNumber() > newNodeNumber) // 8 * (n-1)
+        {
+            newNodePtr->setNext(_head);
+            _head = newNodePtr;
+        }
+        else if (tmpNode->getNext() == NULL)
+        {
+            tmpNode->setNext(newNodePtr);
+            newNodePtr->setNext(NULL);
+        }
+        else
+        {
+            newNodePtr->setNext(tmpNode->getNext());
+            tmpNode->setNext(newNodePtr);
+        }
+    }
+}
+
+template <typename T>
 T stackList<T>::pop()
 {
     T elementNode = top();
@@ -100,9 +135,15 @@ std::shared_ptr<stackNode<T>> stackList<T>::getHead()
 
 /* OVERLOADED OPERATORS */
 template <typename T>
-std::ofstream &operator<<(std::ofstream &out, stackList<T> &list)
+std::ostream &operator<<(std::ostream &out, stackList<T> &list)
 {
+    std::shared_ptr<stackNode<T>> tmpPtr = list.getHead();
+    while (tmpPtr != NULL)
+    {
+        std::cout << tmpPtr->getElement() << std::endl;
+        tmpPtr = tmpPtr->getNext();
+    }
+
     return out;
 }
-
 #endif

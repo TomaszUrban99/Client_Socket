@@ -26,80 +26,46 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
 #include "stos_tablica.hh"
+#include "stackList.hh"
+#include "socketConnection.hh"
+#include "fileTransferClient.hh"
 
-constexpr char path[] = "../tests/tests_data/test1_data.txt";
+constexpr char path[] = "../tests_data/test_data.txt";
+constexpr int buffer_size = 100;
 
 int main()
 {
-    StackArray<int> stack_int;
-    StackArray<float> stack_float;
-    StackArray<double> stack_double;
-    StackArray<char> stack_char;
+    char *buffer = new char(buffer_size);
+    std::ifstream testDataStream(path, std::ifstream::in);
 
-    /* Opening the file */
-    std::ifstream fileHandle;
-    fileHandle.open(path);
-    if (!fileHandle.is_open())
+    /*if (testDataStream.fail())
     {
+        perror("Failed to open file with data for tests");
         return -1;
-    }
+    }*/
 
-    /* Integers */
-    int intVar;
-    fileHandle >> intVar;
-    if (!fileHandle.is_open())
-    {
-        return -1;
-    }
+    testDataStream.getline(buffer, buffer_size);
 
-    stack_int.push(intVar);
-    if (stack_int.stackSize() != 1)
-        return -1;
+    /*
+        Declare socketConnection_client object to
+        enable handle connection to server
+    */
+    socketConnection_client serverConn;
 
-    /* Check the pop function */
-    if (stack_int.pop() != intVar)
-        return -1;
+    /* Connect to given ip_address */
+    serverConn.clientConnect(buffer);
 
-    /* Double */
-    double doubleVar;
-    fileHandle >> doubleVar;
-    if (fileHandle.fail())
-        return -1;
-    stack_double.push(doubleVar);
-    if (stack_double.stackSize() != 1)
-        return -1;
+    delete[] buffer;
 
-    /* Check the pop function */
-    if (stack_double.pop() != doubleVar)
-        return -1;
+    buffer = new char(buffer_size);
 
-    /* Float */
-    float floatVar;
-    fileHandle >> floatVar;
-    if (fileHandle.fail())
-        return -1;
-    stack_float.push(floatVar);
-    if (stack_float.stackSize() != 1)
-        return -1;
+    testDataStream.getline(buffer, buffer_size);
 
-    /* Check the pop function */
-    if (stack_float.pop() != floatVar)
-        return -1;
+    fileTransferClient Transfer(buffer);
 
-    /* Char */
-    char charVar;
-    fileHandle >> charVar;
-    if (fileHandle.fail())
-        return -1;
-    stack_char.push(charVar);
-    if (stack_char.stackSize() != 1)
-        return -1;
-
-    /* Check the pop function */
-    if (stack_char.pop() != charVar)
-        return -1;
+    Transfer.receiveFile(serverConn);
+    Transfer.writeToFile();
 
     return 0;
 }

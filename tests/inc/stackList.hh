@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <iostream>
+#include <fstream>
 #include "stackNode.hh"
 
 template <class T>
@@ -29,14 +30,11 @@ public:
     /* ACCESS TO ATTRIBUTES */
     T &top();
     std::shared_ptr<stackNode<T>> getHead();
-    T top() const
-    {
-        return _head->getElement();
-    }
+    T top() const { return _head->getElement(); }
 
     /* TOOLS FOR THE STACK */
-    void
-    push(T newElem);
+    void push(T newElem);
+    void push(T newElem, int newElemNumber);
     T pop();
 };
 
@@ -81,6 +79,38 @@ void stackList<T>::push(T newElem)
 }
 
 template <typename T>
+void stackList<T>::push(T newElem, int newNodeNumber)
+{
+    std::shared_ptr<stackNode<T>> newNodePtr(new stackNode<T>(newElem, newNodeNumber));
+    std::shared_ptr<stackNode<T>> tmpNode = _head;
+
+    if (tmpNode == NULL)
+    {
+        _head = newNodePtr;
+        newNodePtr->setNext(NULL);
+    }
+    else
+    {
+        while (tmpNode->getNext() != NULL && tmpNode->getNodeNumber() < newNodeNumber)
+        {
+            tmpNode = tmpNode->getNext();
+        }
+
+        if (tmpNode->getNext() == NULL)
+        {
+            tmpNode->setNext(newNodePtr);
+            newNodePtr->setNext(NULL);
+        }
+        else
+        {
+            std::shared_ptr<stackNode<T>> tmpNode2 = tmpNode->getNext();
+            tmpNode->setNext(newNodePtr);
+            newNodePtr->setNext(tmpNode2);
+        }
+    }
+}
+
+template <typename T>
 T stackList<T>::pop()
 {
     T elementNode = top();
@@ -100,9 +130,15 @@ std::shared_ptr<stackNode<T>> stackList<T>::getHead()
 
 /* OVERLOADED OPERATORS */
 template <typename T>
-std::ofstream &operator<<(std::ofstream &out, stackList<T> &list)
+std::ostream &operator<<(std::ostream &out, stackList<T> &list)
 {
+    std::shared_ptr<stackNode<T>> tmpPtr = list.getHead();
+    while (tmpPtr != NULL)
+    {
+        std::cout << tmpPtr->getElement() << std::endl;
+        tmpPtr = tmpPtr->getNext();
+    }
+
     return out;
 }
-
 #endif

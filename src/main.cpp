@@ -1,21 +1,35 @@
 #include <iostream>
+#include <fstream>
 #include "stos_tablica.hh"
 #include "stackList.hh"
 #include "socketConnection.hh"
+#include "fileTransferClient.hh"
+
+constexpr int INPUT_ARGUMENTS = 3;
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-    char send[] = "Collere";
-    char received[] = "Collere";
-    char ip_address[] = "127.0.0.1";
-    char end = 'q';
-    int socketDescriptor;
+    if (argc < INPUT_ARGUMENTS)
+    {
+        perror("Incorrect number of input arguments.");
+        return -1;
+    }
+
+    /*
+        Declare socketConnection_client object to
+        enable handle connection to server
+    */
     socketConnection_client serverConn;
 
-    serverConn.clientConnect(ip_address);
-    serverConn.client_send(send);
+    /* Connect to given ip_address */
+    serverConn.clientConnect(argv[1]);
+
+    fileTransferClient Transfer(argv[2]);
+
+    Transfer.receiveFile(serverConn);
+    Transfer.writeToFile();
 
     return 0;
 }

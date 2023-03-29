@@ -29,19 +29,27 @@ socketConnection_client &socketConnection_client::clientConnect(char ip_address[
     return *this;
 }
 
-int socketConnection_client::client_read(char server_buffer[])
+int socketConnection_client::client_read(char server_buffer[], int size)
 {
-    read(socket_descriptor,
-         server_buffer, sizeof(*server_buffer) / sizeof(char));
+    int read_bytes = read(socket_descriptor, server_buffer, size);
+    return read_bytes;
+}
 
-    return 0;
+int socketConnection_client::client_read()
+{
+    int read_bytes = 0;
+    read(socket_descriptor, &read_bytes, sizeof(read_bytes));
+    return ntohl(read_bytes);
+}
+
+int socketConnection_client::client_send(int number_to_send)
+{
+    int read_bytes = htonl(number_to_send);
+    return send(socket_descriptor, &read_bytes, sizeof(read_bytes), 0);
 }
 
 int socketConnection_client::client_send(char character_to_send[])
 {
-    std::cout << character_to_send << std::endl;
-    send(socket_descriptor, character_to_send,
-         strlen(character_to_send), 0);
-
-    return 0;
+    return send(socket_descriptor, character_to_send,
+                strlen(character_to_send), 0);
 }

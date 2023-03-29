@@ -46,8 +46,11 @@ public:
         int server_read()- function for reading incoming
         messages
     */
-    int client_read(char server_buffer[]);
+    int client_read();
 
+    int client_read(char server_buffer[], int size);
+
+    int client_send(int number_to_send);
     /*
         int server_send()- function for sending messages
         to the connected clients
